@@ -55,24 +55,19 @@ class OffboardControl(Node):
             reliability=QoSReliabilityPolicy.BEST_EFFORT,
             durability=QoSDurabilityPolicy.TRANSIENT_LOCAL,
             history=QoSHistoryPolicy.KEEP_LAST,
-            depth=0
+            depth=1
         )
 
         qos_profile_sub = QoSProfile(
             reliability=QoSReliabilityPolicy.BEST_EFFORT,
             durability=QoSDurabilityPolicy.VOLATILE,
             history=QoSHistoryPolicy.KEEP_LAST,
-            depth=0
+            depth=1
         )
 
         self.status_sub = self.create_subscription(
             VehicleStatus,
-            'fmu/out/vehicle_status',
-            self.vehicle_status_callback,
-            qos_profile_sub)
-        self.status_sub = self.create_subscription(
-            VehicleStatus,
-            'fmu/out/vehicle_status_v1',
+            'fmu/out/vehicle_status_v4',
             self.vehicle_status_callback,
             qos_profile_sub)
         self.publisher_offboard_mode = self.create_publisher(OffboardControlMode, 'fmu/in/offboard_control_mode', qos_profile_pub)
