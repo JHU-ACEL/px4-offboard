@@ -58,37 +58,31 @@ class PX4Visualizer(Node):
             reliability=QoSReliabilityPolicy.BEST_EFFORT,
             durability=QoSDurabilityPolicy.TRANSIENT_LOCAL,
             history=QoSHistoryPolicy.KEEP_LAST,
-            depth=0
+            depth=1
         )
 
         qos_profile_sub = QoSProfile(
             reliability=QoSReliabilityPolicy.BEST_EFFORT,
             durability=QoSDurabilityPolicy.VOLATILE,
             history=QoSHistoryPolicy.KEEP_LAST,
-            depth=0
+            depth=1
         )
 
         self.attitude_sub = self.create_subscription(
             VehicleAttitude,
-            "fmu/out/vehicle_attitude",
+            "/fmu/out/vehicle_attitude",
             self.vehicle_attitude_callback,
             qos_profile_sub,
         )
         self.local_position_sub = self.create_subscription(
             VehicleLocalPosition,
-            "fmu/out/vehicle_local_position",
-            self.vehicle_local_position_callback,
-            qos_profile_sub,
-        )
-        self.local_position_sub = self.create_subscription(
-            VehicleLocalPosition,
-            "fmu/out/vehicle_local_position_v1",
+            "/fmu/out/vehicle_local_position_v1",
             self.vehicle_local_position_callback,
             qos_profile_sub,
         )
         self.setpoint_sub = self.create_subscription(
             TrajectorySetpoint,
-            "fmu/in/trajectory_setpoint",
+            "/fmu/in/trajectory_setpoint",
             self.trajectory_setpoint_callback,
             qos_profile_sub,
         )
